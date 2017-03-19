@@ -1,0 +1,12 @@
+Package: smcolors
+Title: SM colour tools.
+Version: 0.1
+Authors@R: person("Shane", "Mono", email = "mail@sm-art.cc", role = c("aut", "cre"))
+Description: Hunt colours from Google image search results and make versatile gradients.
+Depends:
+    png,
+    jpeg
+License: sm-art
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
