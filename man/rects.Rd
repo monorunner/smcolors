@@ -4,8 +4,9 @@
 \alias{rects}
 \title{Draw rectangles/ grids.}
 \usage{
-rects(xl, yt, w, h, ncol = 3, nrow = 1, border = "transparent",
-  add = FALSE, col = "white", texts = NULL, texts.col = "auto", ...)
+rects(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
+  border = "transparent", add = FALSE, col = occblues, texts = NULL,
+  texts.col = "auto", scale = FALSE, ...)
 }
 \arguments{
 \item{xl}{First/ left-most xleft.}
@@ -22,9 +23,7 @@ rects(xl, yt, w, h, ncol = 3, nrow = 1, border = "transparent",
 
 \item{border}{Default to transparent.}
 
-\item{add}{Default to \code{FALSE}. The function detects whether a plot
-device is active and if not, calls plot.new before plotting. If a plot 
-has been called and rects should be added to plot, set to \code{TRUE}.}
+\item{add}{Default to \code{FALSE}.}
 
 \item{col}{Fill colours of rects.}
 
@@ -36,6 +35,10 @@ the underlying rectangle colour. \code{"theme"} would choose the colours
 from the colours supplied to rectangles. Darkest one would be the black
 equivalent and lightest one the white equivalent. Works well on one-
 colour gradients.}
+
+\item{scale}{If \code{TRUE}, the fill colours of cells/ rectangles will
+be based on the values in the cell (need to be numeric). \code{\link{
+make.gradient}} can order the gradient key colours beforehand.}
 }
 \value{
 Draw rectangles.
@@ -44,6 +47,6 @@ Draw rectangles.
 Draw rectangles/ grids.
 }
 \examples{
-rects(0, 5, 1, 1, 5, 5, col = occblues)
+rects(0, 5, 1, 1, 5, 5, col = occblues, texts = 1:25)
 }
 
