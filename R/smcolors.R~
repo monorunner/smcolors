@@ -387,19 +387,43 @@ rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
 }
 
 
+#' Pick n most distinctive colours out of many colours.
+#'
+#' @param colornames A vetor of colour names.
+#' @param n How many colours to pick.
+#' @param plot Whether to plot the colour bar. Default \code{FALSE}.
+#' @return Picked colour names (ordered from dark to light).
+#' @details Makes the process of choosing colours easier especially when 
+#' choosing legend colours in a list of gradient theme colours.
+#' @export
+#' @examples
+#' pink.n(make.gradient(occblues, len = 2), len = 8, plot = TRUE)
+pick.n <- function(colornames, n, plot = FALSE) {
 
-# pick.n <- function(colornames, n, plot = FALSE) {
-# 
-#     dist2black <- apply(sapply(col, col2rgb), 2,
-#                         function(c) dist(rbind(c, c(0,0,0))))
-#     colornames <- colornames[order(dist2black)]
-#     if (n == 1) out <- colornames[sample(1:length(colornames), 1)]
-#     else if (n == 2) out <- colornames[c(1, length(colornames))]
-#     else {
-#         out <- 
-#     }
-# }
-# 
+    nofx <- function(n, x) {
+	x <- x[order(x)]
+	combo <- combn(x[-c(1, length(x))], n - 2)
+	combo <- rbind(x[1], combo, x[length(x)])
+	combo[, which.max(apply( combo, 2, function(c) min(diff(c)) ))]
+    }
+
+    dist2black <- apply(sapply(colornames, col2rgb), 2,
+			function(c) dist(rbind(c, c(0,0,0))))
+    if (n == 1) out <- colornames[sample(1:length(colornames), 1)]
+    else if (n == 2) out <- colornames[c(which.min(dist2black), 
+					 which.max(dist2black))]
+    else {
+	out <- colornames[which(dist2black %in% nofx(n, dist2black)) ]
+    }
+
+    out <- make.gradient(out, len = 1, order = TRUE, plot = FALSE)
+
+    if(plot) draw.bar(out)
+    out
+}
+
+
+
 smart.gradient <- function(..., len = 5) {
 
     col.list <- list(...)

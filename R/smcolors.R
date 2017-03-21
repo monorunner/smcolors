@@ -414,9 +414,10 @@ pick.n <- function(colornames, n, plot = FALSE) {
 					 which.max(dist2black))]
     else {
 	out <- colornames[which(dist2black %in% nofx(n, dist2black)) ]
+	out <- out[!is.na(out)]
     }
 
-    out <- make.gradient(out, len = 1, order = TRUE, plot = FALSE)
+    out <- out[order(dist2black[out])] 
 
     if(plot) draw.bar(out)
     out
