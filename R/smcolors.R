@@ -277,12 +277,18 @@ make.gradient <- function(..., len = 5, fixed = NULL, order = FALSE,
     else {
 	out <- NULL
 	for (i in 2: length(col.list)) {
-
+	    if (i < length(col.list)) {
 	    out <- c(out, 
 		     make.gradient2(col.list[i-1], col.list[i],
 				    len = len + 1, fixed = fixed,
-				    plot = FALSE)[- (len+1)])
-    	    
+				    plot = FALSE)[- (len+1)]) 
+			      }
+	else {
+	    out <- c(out,
+		      make.gradient2(col.list[i-1], col.list[i],
+				    len = len, fixed = fixed,
+				    plot = FALSE)) 
+	}
 	}
     }
 
@@ -319,12 +325,22 @@ rects <- function(xl, yt, w, h, ncol = 3, nrow = 1,
 		  border = "transparent", add = FALSE, col = "white",
 		  texts = NULL, texts.col = "auto", ...) {
 
-    xlefts <- seq(xl, by = w, len = ncol)
-    xlefts <- rep(xlefts, each = nrow)
-    ybottoms <- seq(yt - h, by = -h, len = nrow)
-    ybottoms <- rep(ybottoms, ncol)
-    xrights <- xlefts + w
-    ytops <- ybottoms + h 
+    if(length(xl) == 1 & length(yt) == 1) {
+	xlefts <- seq(xl, by = w, len = ncol)
+	xlefts <- rep(xlefts, each = nrow)
+	ybottoms <- seq(yt - h, by = -h, len = nrow)
+	ybottoms <- rep(ybottoms, ncol)
+	xrights <- xlefts + w
+	ytops <- ybottoms + h 
+    }
+
+    if(length(xl) > 1 & length(yt) > 1) {
+	xlefts <- xl
+	ybottoms <- yt - h
+	xrights <- xl + w
+	ytops <- yt
+    }
+
     if(attr(dev.cur(), "names") == "null device" | add == FALSE) {
 	plot(NULL, xlab = "", ylab = "", axes = FALSE, bty = "n",
 	     xlim = c(xl, xl + ncol * w),
@@ -361,6 +377,19 @@ rects <- function(xl, yt, w, h, ncol = 3, nrow = 1,
 }
 
 
+
+# pick.n <- function(colornames, n, plot = FALSE) {
+# 
+#     dist2black <- apply(sapply(col, col2rgb), 2,
+#                         function(c) dist(rbind(c, c(0,0,0))))
+#     colornames <- colornames[order(dist2black)]
+#     if (n == 1) out <- colornames[sample(1:length(colornames), 1)]
+#     else if (n == 2) out <- colornames[c(1, length(colornames))]
+#     else {
+#         out <- 
+#     }
+# }
+# 
 smart.gradient <- function(..., len = 5) {
 
     col.list <- list(...)
