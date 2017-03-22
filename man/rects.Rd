@@ -49,4 +49,3 @@ Draw rectangles/ grids.
 \examples{
 rects(0, 5, 1, 1, 5, 5, col = occblues, texts = 1:25)
 }
-

@@ -26,4 +26,3 @@ choosing legend colours in a list of gradient theme colours.
 \examples{
 pink.n(make.gradient(occblues, len = 2), len = 8, plot = TRUE)
 }
-

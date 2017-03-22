@@ -22,4 +22,3 @@ hunt.colors("stardew valley", 10, 1:10)
 \seealso{
 \code{\link{hunt.colors}}
 }
-

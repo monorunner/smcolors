@@ -16,4 +16,3 @@ Google limits number of images returned by 20.
 \description{
 Get image url quote list from Google.
 }
-

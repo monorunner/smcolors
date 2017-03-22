@@ -15,4 +15,3 @@ Draw raster image.
 \description{
 Print a raster image.
 }
-

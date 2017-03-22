@@ -18,4 +18,3 @@ A 2D or 3D array representing the image.
 \description{
 Import one image from an url quote, output 2d or 3d array.
 }
-

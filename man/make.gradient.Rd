@@ -43,4 +43,3 @@ make.gradient("turquoise", fixed = "hv")
 make.gradient(cyans[1], blues[9], len = 8)
 make.gradient(blues[1], reds[1], yellows[1], cyans[1])
 }
-

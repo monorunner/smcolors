@@ -438,6 +438,15 @@ smart.gradient <- function(..., len = 5) {
 
 }
 
+#' Set up a null plot.
+#'
+#' @param xl0,xl1 xlim. Default c(0, 5).
+#' @param yl0,yl1 ylim. Default c(0, 5).
+#' @export
+setup.null <- function(xl0 = 0, xl1 = 5, yl0 = 0 , yl1 = 5) {
+    plot(NULL, xlab = "", ylab = "", axes = FALSE,
+	 xlim = c(xl0, xl1), ylim - c(yl0, yl1))
+}
 
 
 #' @export
@@ -523,3 +532,19 @@ occ.colors <- list(occblues = occblues,
 		   occgrays = occgrays,
 		   occgreens  = occgreens)
 
+#' @export
+xlred <- rgb(248, 105, 107, max = 255)
+
+#' @export
+xlyellow <- rgb(255, 235,132, max = 255)
+
+#' @export
+xlgreen <- rgb(99, 190, 123, max = 255)
+
+#' @export
+xl.colors <- list(xlred = xlred, xlyellow = xlyellow, xlgreen = xlgreen)
+
+#' @export
+preset.colors <- list(html.colors = html.colors,
+		      xl.colors = xl.colors,
+		      occ.colors = occ.colors)

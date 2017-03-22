@@ -17,4 +17,3 @@ Draw a colour bar.
 \description{
 Plot a colour bar.
 }
-

@@ -16,4 +16,3 @@ k.colors(img, num = 5, seed = 42)
 \description{
 Find main colours by k-means.
 }
-
