@@ -4,7 +4,7 @@ library(png)
 #' Get image url quote list from Google.
 #'
 #' @param qword String. Image search key word.
-#' @return An image url quote list with 20 entries. 
+#' @return An image url quote list with 20 entries.
 #' Google limits number of images returned by 20.
 #' @export
 get.imglist <- function(qword) {
@@ -30,7 +30,7 @@ import <- function(imgquote, out2d = FALSE) {
     handler <- tempfile()
     download.file(imgquote, handler, mode="wb", quiet = TRUE)
     if( is( try(readJPEG(handler), silent = TRUE), "try-error") )  {
-	img <- readPNG(handler)  } 
+	img <- readPNG(handler)  }
     else { img <- readJPEG(handler) }
     suppressWarnings(file.remove(handler))
     if (out2d) img <- apply(img, 3, rbind)
@@ -45,7 +45,7 @@ import <- function(imgquote, out2d = FALSE) {
 #' @export
 draw <- function(img, ...) {
     w <- dim(img)[1]; h <- dim(img)[2]
-    plot(c(0, 1), c(0, w/h), bty = "n", col = NA, axes = FALSE, 
+    plot(c(0, 1), c(0, w/h), bty = "n", col = NA, axes = FALSE,
 	 xlab = "", ylab = "", asp = 1, ...)
     rasterImage(img, 0, 0, 1, w/h)
 }
@@ -59,9 +59,9 @@ draw <- function(img, ...) {
 draw.bar <- function(colornames, texts = TRUE) {
     n <- length(colornames)
     plot(n, 0, col = NA, pch = 16, cex = 2, bty = "n",
-	 axes = FALSE, xlab = "", ylab = "", 
+	 axes = FALSE, xlab = "", ylab = "",
 	 ylim = c(0, 0.5), xlim = c(0, n), asp = 1)
-    for (i in 1:n) { 
+    for (i in 1:n) {
 	rect(i-1,0,i,0.5, col = colornames[i], border = NA)
 
 	if (texts) {
@@ -113,7 +113,7 @@ fill.seq <- function(sq) {
     pos[1, ] <- which(!is.na(sq))
     pos[2, ] <- c(pos[1, -1], length(sq))
     for (i in 1:dim(pos)[2]) {
-	sq[pos[1, i] : pos[2, i]] <- 
+	sq[pos[1, i] : pos[2, i]] <-
 	    seq(sq[pos[1, i]], sq[pos[2, i]], length = pos[2,i]-pos[1,i]+1)
     }
     return(sq)
@@ -135,7 +135,7 @@ fill.seq <- function(sq) {
 #' @examples
 #' show.imgs("stardew valley")
 #' hunt.colors("stardew valley", 10, 1:10)
-hunt.colors <- function(qword, num = 5, index = 1, seed = 42, 
+hunt.colors <- function(qword, num = 5, index = 1, seed = 42,
 			plot = TRUE) {
     imglist <- get.imglist(qword)
     allimgs <- import(imglist[index[1]], out2d = TRUE)
@@ -186,7 +186,7 @@ make.gradient2 <- function(from = NULL, to = NULL,
 	    return(make.gradient(from, to, fixed = NULL, plot = plot,
 				 len = len) )
 	}
-	locked.row <- lookup[fixedones] 
+	locked.row <- lookup[fixedones]
 	color <- col2rgb(from)
 	if (method == "hsv") color <- rgb2hsv(color)
 	else if (method == "rgb") color <- color / 255
@@ -210,7 +210,7 @@ make.gradient2 <- function(from = NULL, to = NULL,
 	else {
 	    if (!is.null(from)) {
 		pos <- max(1, round(len * (mean(col2rgb(from) / 255))))
-		left <- make.gradient2("black", from, plot = FALSE, 
+		left <- make.gradient2("black", from, plot = FALSE,
 				      len = pos)
 		right <- make.gradient2(from, "white", plot = FALSE,
 				       len = (len - pos + 1))[-1]
@@ -219,14 +219,14 @@ make.gradient2 <- function(from = NULL, to = NULL,
 		return(out)
 	    }
 	    else {
-		return(make.gradient2("black", "white", 
+		return(make.gradient2("black", "white",
 				     plot = plot, len = len))
 	    }
 	}
     }
     mat <- apply(mat, 1, fill.seq)
     if (method == "rgb") {
-	out <- apply(t(mat), 2, function(c) rgb(c[1], c[2], c[3])) 
+	out <- apply(t(mat), 2, function(c) rgb(c[1], c[2], c[3]))
     }
     else if (method == "hsv") {
 	out <- apply(t(mat), 2, function(c) hsv(c[1], c[2], c[3]))
@@ -240,8 +240,8 @@ make.gradient2 <- function(from = NULL, to = NULL,
 #' @param ... Color names.
 #' @param len Length of the gradient. If more than two colors, the length of
 #' the step (A 4-colour gradient with \code{len = 5} gives 15 colours).
-#' @param fixed A concatenated string indicating the fixed component(s) of 
-#' the gradient. One or two components (letters) of either \code{"rgb"} or 
+#' @param fixed A concatenated string indicating the fixed component(s) of
+#' the gradient. One or two components (letters) of either \code{"rgb"} or
 #' \code{"hsv"} can be specified. See details.
 #' @param order If \code{TRUE}, colours are ordered to make a continuous
 #' gradient from dark to light.
@@ -259,7 +259,7 @@ make.gradient2 <- function(from = NULL, to = NULL,
 #' make.gradient("turquoise", fixed = "hv")
 #' make.gradient(cyans[1], blues[9], len = 8)
 #' make.gradient(blues[1], reds[1], yellows[1], cyans[1])
-make.gradient <- function(..., len = 5, fixed = NULL, order = FALSE, 
+make.gradient <- function(..., len = 5, fixed = NULL, order = FALSE,
 			  plot = TRUE, texts = TRUE) {
     col.list <- c(...)
     if (order) {
@@ -267,27 +267,27 @@ make.gradient <- function(..., len = 5, fixed = NULL, order = FALSE,
 			    function(c) dist(rbind(c, c(0,0,0))))
 	col.list <- col.list[order(dist2black)]
     }
-    
-    if (length(col.list) == 1) 
-	out <- make.gradient2(..., len = len, 
+
+    if (length(col.list) == 1)
+	out <- make.gradient2(..., len = len,
 			      fixed = fixed, plot = FALSE)
-    else if (length(col.list) == 2) 
+    else if (length(col.list) == 2)
 	out <- make.gradient2(col.list[1], col.list[2], len = len,
 			      fixed = fixed, plot = FALSE)
     else {
 	out <- NULL
 	for (i in 2: length(col.list)) {
 	    if (i < length(col.list)) {
-	    out <- c(out, 
+	    out <- c(out,
 		     make.gradient2(col.list[i-1], col.list[i],
 				    len = len + 1, fixed = fixed,
-				    plot = FALSE)[- (len+1)]) 
+				    plot = FALSE)[- (len+1)])
 			      }
 	else {
 	    out <- c(out,
 		      make.gradient2(col.list[i-1], col.list[i],
 				    len = len, fixed = fixed,
-				    plot = FALSE)) 
+				    plot = FALSE))
 	}
 	}
     }
@@ -322,7 +322,7 @@ make.gradient <- function(..., len = 5, fixed = NULL, order = FALSE,
 #' @export
 #' @examples
 #' rects(0, 5, 1, 1, 5, 5, col = occblues, texts = 1:25)
-rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1, 
+rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
 		  border = "transparent", add = FALSE, col = occblues,
 		  texts = NULL, texts.col = "auto", scale = FALSE, ...) {
 
@@ -332,7 +332,7 @@ rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
 	ybottoms <- seq(yt - h, by = -h, len = nrow)
 	ybottoms <- rep(ybottoms, ncol)
 	xrights <- xlefts + w
-	ytops <- ybottoms + h 
+	ytops <- ybottoms + h
     }
 
     if(length(xl) > 1 & length(yt) > 1) {
@@ -357,13 +357,13 @@ rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
 
     if(ncol * nrow < length(col) & scale == FALSE) col <- col[1:(ncol*nrow)]
 
-    
+
 
     dist2white <- apply(sapply(col, col2rgb), 2,
 			function(c) dist(rbind(c, c(255,255,255))))
     dist2black <- apply(sapply(col, col2rgb), 2,
 			function(c) dist(rbind(c, c(0,0,0))))
-    
+
     if(texts.col == "auto") {
 	texts.col <- ifelse(dist2black < dist2white, "white", "black")
     }
@@ -376,12 +376,12 @@ rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
     }
 
     return({
-	rect(xlefts, ybottoms, xrights, ytops, 
+	rect(xlefts, ybottoms, xrights, ytops,
 	     border = border, col = col, ...)
 	if (!is.null(texts)) {
-	    text(xlefts + w/2, ybottoms + h/2, lab = texts, 
+	    text(xlefts + w/2, ybottoms + h/2, lab = texts,
 		 col = texts.col)
-	} 
+	}
 				    })
 
 }
@@ -393,7 +393,7 @@ rects <- function(xl, yt, w = 1, h = 1, ncol = 3, nrow = 1,
 #' @param n How many colours to pick.
 #' @param plot Whether to plot the colour bar. Default \code{FALSE}.
 #' @return Picked colour names (ordered from dark to light).
-#' @details Makes the process of choosing colours easier especially when 
+#' @details Makes the process of choosing colours easier especially when
 #' choosing legend colours in a list of gradient theme colours.
 #' @export
 #' @examples
@@ -410,14 +410,14 @@ pick.n <- function(colornames, n, plot = FALSE) {
     dist2black <- apply(sapply(colornames, col2rgb), 2,
 			function(c) dist(rbind(c, c(0,0,0))))
     if (n == 1) out <- colornames[sample(1:length(colornames), 1)]
-    else if (n == 2) out <- colornames[c(which.min(dist2black), 
+    else if (n == 2) out <- colornames[c(which.min(dist2black),
 					 which.max(dist2black))]
     else {
 	out <- colornames[which(dist2black %in% nofx(n, dist2black)) ]
 	out <- out[!is.na(out)]
     }
 
-    out <- out[order(dist2black[out])] 
+    out <- out[order(dist2black[out])]
 
     if(plot) draw.bar(out)
     out
@@ -433,7 +433,7 @@ smart.gradient <- function(..., len = 5) {
     grid <- as.data.frame(expand.grid(col.list))
     if (nrow(grid) > 15) grid <- grid[sample(nrow(grid), 15), ]
     par(mfrow = c(5, 3), mar = rep(0, 4))
-    apply(grid, 1, make.gradient, len = len) 
+    apply(grid, 1, make.gradient, len = len)
 
 
 }
@@ -450,7 +450,7 @@ setup.null <- function(xl0 = 0, xl1 = 5, yl0 = 0 , yl1 = 5) {
 
 
 #' @export
-pinks <- c("pink", "lightpink", "hotpink", "deeppink", 
+pinks <- c("pink", "lightpink", "hotpink", "deeppink",
 	   "palevioletred", "mediumvioletred")
 
 #' @export
@@ -462,7 +462,7 @@ oranges <- c("orangered", "tomato", "coral", "darkorange",
 	     "orange")
 
 #' @export
-yellows <- c("yellow", "lightyellow", "lemonchiffon", 
+yellows <- c("yellow", "lightyellow", "lemonchiffon",
 	     "lightgoldenrodyellow", "papayawhip", "moccasin",
 	     "peachpuff", "palegoldenrod", "khaki", "darkkhaki",
 	     "gold")
@@ -470,7 +470,7 @@ yellows <- c("yellow", "lightyellow", "lemonchiffon",
 #' @export
 browns <- c("cornsilk", "blanchedalmond", "bisque", "navajowhite",
 	    "wheat", "burlywood", "tan", "rosybrown", "sandybrown",
-	    "goldenrod", "darkgoldenrod", "peru", "chocolate", 
+	    "goldenrod", "darkgoldenrod", "peru", "chocolate",
 	    "saddlebrown", "sienna", "brown", "maroon")
 
 #' @export
@@ -500,7 +500,7 @@ purples <- c("lavender", "thistle", "plum", "violet", "orchid",
 
 #' @export
 whites <- c("white", "snow", "honeydew", "mintcream", "azure",
-	    "aliceblue", "ghostwhite", "whitesmoke", "seashell", 
+	    "aliceblue", "ghostwhite", "whitesmoke", "seashell",
 	    "beige", "oldlace", "floralwhite", "ivory", "antiquewhite",
 	    "linen", "lavenderblush", "mistyrose")
 
@@ -511,9 +511,9 @@ grays <- c("gainsboro", "lightgray", "darkgray", "gray",
 
 
 #' @export
-html.colors <- list(pinks=pinks, reds=reds, oranges=oranges, 
-		    yellows=yellows, browns=browns, greens=greens, 
-		    cyans=cyans, blues=blues, purples=purples, 
+html.colors <- list(pinks=pinks, reds=reds, oranges=oranges,
+		    yellows=yellows, browns=browns, greens=greens,
+		    cyans=cyans, blues=blues, purples=purples,
 		    whites=whites, grays=grays)
 
 #' @export
@@ -528,9 +528,17 @@ occgreens  <- c("#D1E3D1", "#AFCDAB", "#7FB27F",
 		"#579A57", "#2B802B", "#006600")
 
 #' @export
+occtaupes <- c("#E6DCD7", "#D7C8BE", "#BEAA96", "#968C78", "#827864")
+
+#' @export
+occteals <- c("#99D5D5", "#6CC0C0", "#48A6A6", "#3F8E8C", "#33726D" )
+
+#' @export
 occ.colors <- list(occblues = occblues,
 		   occgrays = occgrays,
-		   occgreens  = occgreens)
+		   occgreens  = occgreens,
+		   occteals = occteals,
+		   occtaupes = occtaupes)
 
 #' @export
 xlred <- rgb(248, 105, 107, max = 255)
